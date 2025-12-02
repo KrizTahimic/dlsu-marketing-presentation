@@ -1,0 +1,305 @@
+/* ============================================
+   SLIDES CSS - 16:9 Presentation Theme
+   Design adapted from brochure
+   ============================================ */
+
+/* CSS Variables - Same as brochure */
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #3b82f6;
+  --accent: #0891b2;
+  --accent-dark: #0e7490;
+  --accent-light: #06b6d4;
+  --dark: #1f2937;
+  --medium: #4b5563;
+  --light: #f3f4f6;
+  --lighter: #f9fafb;
+  --white: #ffffff;
+
+  /* 16:9 Slide Dimensions */
+  --slide-width: 1920px;
+  --slide-height: 1080px;
+  --slide-padding: 80px;
+}
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 2.4rem;
+  line-height: 1.5;
+  color: var(--dark);
+  background: #374151;
+}
+
+/* Slide Layout */
+.slide {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  padding: var(--slide-padding);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  page-break-after: always;
+}
+
+/* Gradient Mesh Background - from brochure */
+.slide {
+  background-color: var(--white);
+  background-image:
+    radial-gradient(ellipse at 10% 20%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(8, 145, 178, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(37, 99, 235, 0.02) 0%, transparent 70%);
+}
+
+/* Alternate slides */
+.slide:nth-child(even) {
+  background-color: var(--lighter);
+  background-image:
+    radial-gradient(ellipse at 80% 30%, rgba(8, 145, 178, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 70%, rgba(37, 99, 235, 0.04) 0%, transparent 50%);
+}
+
+/* Bottom accent bar */
+.slide::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+/* Title Slide */
+.slide.title-slide {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: var(--white);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.slide.title-slide::after {
+  display: none;
+}
+
+.slide.title-slide h1 {
+  font-size: 6rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.slide.title-slide .subtitle {
+  font-size: 3rem;
+  opacity: 0.9;
+  max-width: 80%;
+}
+
+.slide.title-slide .author {
+  margin-top: 60px;
+  font-size: 2.4rem;
+  opacity: 0.8;
+}
+
+.slide.title-slide .institution {
+  font-size: 2rem;
+  opacity: 0.7;
+  margin-top: 10px;
+}
+
+/* Content Slides */
+.slide h2 {
+  font-size: 4.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid var(--accent);
+}
+
+.slide h3 {
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+}
+
+.slide p {
+  font-size: 2.8rem;
+  line-height: 1.6;
+  color: var(--medium);
+  margin-bottom: 20px;
+}
+
+.slide ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.slide li {
+  font-size: 2.8rem;
+  line-height: 1.6;
+  color: var(--dark);
+  margin-bottom: 25px;
+  padding-left: 50px;
+  position: relative;
+}
+
+.slide li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 50%;
+}
+
+/* Slide Content Layout */
+.slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Two Column Layout */
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  flex: 1;
+}
+
+/* Image Styling */
+.slide img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.slide figure {
+  margin: 20px 0;
+}
+
+.slide figcaption {
+  font-size: 2rem;
+  color: var(--medium);
+  text-align: center;
+  margin-top: 15px;
+  font-style: italic;
+}
+
+/* Highlight Box */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(8, 145, 178, 0.06) 100%);
+  border-left: 5px solid var(--accent);
+  padding: 30px 40px;
+  border-radius: 0 12px 12px 0;
+  margin: 30px 0;
+}
+
+.highlight-box h4 {
+  font-size: 2.4rem;
+  color: var(--accent-dark);
+  margin-bottom: 15px;
+}
+
+/* Metric Cards */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.metric-card {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(135deg, var(--primary), var(--accent));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.metric-card .value {
+  font-size: 5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.metric-card .label {
+  font-size: 2rem;
+  color: var(--medium);
+  margin-top: 10px;
+}
+
+/* Slide Number */
+.slide-number {
+  position: absolute;
+  bottom: 25px;
+  right: 40px;
+  font-size: 1.8rem;
+  color: var(--medium);
+  opacity: 0.6;
+}
+
+/* End Slide */
+.slide.end-slide {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: var(--white);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.slide.end-slide::after {
+  display: none;
+}
+
+.slide.end-slide h2 {
+  color: var(--white);
+  border-bottom: none;
+  font-size: 5rem;
+}
+
+.slide.end-slide .contact {
+  margin-top: 40px;
+  font-size: 2.4rem;
+  opacity: 0.9;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: none;
+  }
+  .slide {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+  }
+}

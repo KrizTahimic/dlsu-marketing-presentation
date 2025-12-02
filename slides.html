@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <title>Mechanistic Interpretability of Code Correctness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+
+  <!-- Slide 1: Title -->
+  <div class="slide title-slide">
+    <h1>Mechanistic Interpretability<br>of Code Correctness</h1>
+    <p class="subtitle">Understanding How Language Models Distinguish Correct from Incorrect Code Using Sparse Autoencoders</p>
+    <p class="author">Kriz Tahimic</p>
+    <p class="institution">De La Salle University</p>
+  </div>
+
+  <!-- Slide 2: The Problem -->
+  <div class="slide">
+    <h2>The Challenge</h2>
+    <div class="slide-content">
+      <div class="two-column">
+        <div>
+          <h3>LLMs Generate Code...</h3>
+          <p>But we can't verify if it's correct without testing</p>
+          <ul>
+            <li>Code looks syntactically correct</li>
+            <li>May contain subtle semantic errors</li>
+            <li>Testing is time-consuming</li>
+          </ul>
+        </div>
+        <div>
+          <h3>The Black Box Problem</h3>
+          <p>Neural networks are notoriously opaque</p>
+          <div class="highlight-box">
+            <h4>Polysemanticity</h4>
+            <p style="font-size: 2.2rem;">Individual neurons respond to multiple, unrelated concepts—making interpretation nearly impossible</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="slide-number">2</span>
+  </div>
+
+  <!-- Slide 3: Our Approach -->
+  <div class="slide">
+    <h2>Our Approach: Sparse Autoencoders</h2>
+    <div class="slide-content">
+      <p>We use SAEs to decompose neural activations into interpretable features</p>
+      <figure>
+        <img src="figures/methodology-pipeline.png" alt="Methodology Pipeline" style="max-height: 600px; margin: 30px auto; display: block;">
+        <figcaption>SAE-based feature extraction pipeline for code correctness analysis</figcaption>
+      </figure>
+    </div>
+    <span class="slide-number">3</span>
+  </div>
+
+  <!-- Slide 4: Key Discovery -->
+  <div class="slide">
+    <h2>Key Discovery: The Asymmetry</h2>
+    <div class="slide-content">
+      <p>We found code correctness directions exist—but they work asymmetrically:</p>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="value">F1 0.821</div>
+          <div class="label">Incorrect Predicting</div>
+        </div>
+        <div class="metric-card">
+          <div class="value">4.04%</div>
+          <div class="label">Correct Steering</div>
+        </div>
+        <div class="metric-card">
+          <div class="value">Failed</div>
+          <div class="label">Incorrect Steering</div>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top: 50px;">
+        <h4>The Insight</h4>
+        <p style="font-size: 2.4rem;">Models encode "wrongness" as detectable anomalies, but "correctness" is more fundamental and harder to manipulate</p>
+      </div>
+    </div>
+    <span class="slide-number">4</span>
+  </div>
+
+  <!-- Slide 5: Practical Applications -->
+  <div class="slide">
+    <h2>Practical Applications</h2>
+    <div class="slide-content">
+      <ul>
+        <li><strong>Error Detection Systems:</strong> Use incorrect-predicting directions (F1=0.821) to flag likely buggy code before deployment</li>
+        <li><strong>Prompting Best Practices:</strong> Prioritize test examples over problem descriptions—test cases drive attention +15%</li>
+        <li><strong>Selective Steering:</strong> Two-stage approach: predict errors first, then steer only flagged samples to avoid corrupting correct code</li>
+      </ul>
+      <div class="highlight-box">
+        <h4>No Retraining Required</h4>
+        <p style="font-size: 2.2rem;">These techniques work with existing models through simple prompt restructuring and activation analysis</p>
+      </div>
+    </div>
+    <span class="slide-number">5</span>
+  </div>
+
+  <!-- Slide 6: Thank You -->
+  <div class="slide end-slide">
+    <h2>Thank You</h2>
+    <p class="contact">
+      Kriz Tahimic<br>
+      kriz_tahimic@dlsu.edu.ph<br><br>
+      Paper under review at ICLR 2026
+    </p>
+  </div>
+
+</body>
+</html>
