@@ -35,3 +35,9 @@ Create HTML/CSS slides for a marketing video about the thesis:
 1. Run `node convert-to-pdf.js screenshot` to generate PNG of each slide
 2. Run `node convert-to-pdf.js pdf` to generate multi-page PDF
 3. Import to Canva for recording
+
+## Claude Workflow (IMPORTANT)
+**After EVERY edit to slides.html or slides.css:**
+1. Run `npm run screenshot` to regenerate slide PNGs
+2. Show the user the generated screenshots so they can review and give feedback
+3. This ensures visual feedback loop for iterative design

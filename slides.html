@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080">
-  <title>Mechanistic Interpretability of Code Correctness</title>
+  <title>Mechanistic Interpretability of Code Correctness in LLMs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,106 +11,454 @@
 </head>
 <body>
 
-  <!-- Slide 1: Title -->
-  <div class="slide title-slide">
-    <h1>Mechanistic Interpretability<br>of Code Correctness</h1>
-    <p class="subtitle">Understanding How Language Models Distinguish Correct from Incorrect Code Using Sparse Autoencoders</p>
-    <p class="author">Kriz Tahimic</p>
-    <p class="institution">De La Salle University</p>
+  <!-- Slide 1: Title/Cover -->
+  <div class="slide cover">
+    <div class="cover-background">
+      <div class="gradient-overlay"></div>
+      <div class="geometric-pattern"></div>
+    </div>
+    <div class="cover-content">
+      <div class="cover-top">
+        <h1 class="cover-title">
+          <span class="title-line">Mechanistic Interpretability</span>
+          <span class="title-line-small">of Code Correctness in LLMs</span>
+        </h1>
+        <p class="cover-subtitle">via Sparse Autoencoders</p>
+      </div>
+
+      <div class="cover-visual">
+        <svg viewBox="0 0 200 150" class="neural-network">
+          <!-- Input layer -->
+          <circle cx="30" cy="40" r="8" class="node input"/>
+          <circle cx="30" cy="75" r="8" class="node input"/>
+          <circle cx="30" cy="110" r="8" class="node input"/>
+
+          <!-- Hidden layer -->
+          <circle cx="100" cy="30" r="8" class="node hidden"/>
+          <circle cx="100" cy="60" r="8" class="node hidden"/>
+          <circle cx="100" cy="90" r="8" class="node hidden"/>
+          <circle cx="100" cy="120" r="8" class="node hidden"/>
+
+          <!-- Output layer -->
+          <circle cx="170" cy="55" r="8" class="node output"/>
+          <circle cx="170" cy="95" r="8" class="node output"/>
+
+          <!-- Connections (faded) -->
+          <g class="connections">
+            <line x1="38" y1="40" x2="92" y2="30"/>
+            <line x1="38" y1="40" x2="92" y2="60"/>
+            <line x1="38" y1="75" x2="92" y2="60"/>
+            <line x1="38" y1="75" x2="92" y2="90"/>
+            <line x1="38" y1="110" x2="92" y2="90"/>
+            <line x1="38" y1="110" x2="92" y2="120"/>
+            <line x1="108" y1="30" x2="162" y2="55"/>
+            <line x1="108" y1="60" x2="162" y2="55"/>
+            <line x1="108" y1="90" x2="162" y2="95"/>
+            <line x1="108" y1="120" x2="162" y2="95"/>
+          </g>
+
+          <!-- Highlighted path (correctness direction) -->
+          <path d="M 38 75 Q 70 60 92 60 Q 130 60 162 55" class="direction-path" fill="none"/>
+        </svg>
+      </div>
+
+      <div class="cover-bottom">
+        <p class="author-name">Kriz Tahimic</p>
+        <p class="adviser-name">Adviser: Dr. Charibeth K. Cheng</p>
+        <div class="institution-badge">
+          <span class="college">College of Computer Studies</span>
+          <span class="university">De La Salle University</span>
+        </div>
+        <p class="academic-year">Academic Year 2025&ndash;2026</p>
+      </div>
+    </div>
   </div>
 
-  <!-- Slide 2: The Problem -->
+  <!-- Slide 2: Context & Problem -->
   <div class="slide">
-    <h2>The Challenge</h2>
-    <div class="slide-content">
-      <div class="two-column">
-        <div>
-          <h3>LLMs Generate Code...</h3>
-          <p>But we can't verify if it's correct without testing</p>
-          <ul>
-            <li>Code looks syntactically correct</li>
-            <li>May contain subtle semantic errors</li>
-            <li>Testing is time-consuming</li>
-          </ul>
+    <div class="slide-header">
+      <div class="header-accent"></div>
+    </div>
+    <div class="slide-content stacked-sections">
+      <div class="section-block">
+        <h2 class="section-title">Context</h2>
+        <p class="intro-text">AI-assisted coding has achieved <strong>widespread adoption</strong>:</p>
+        <ul class="feature-list large">
+          <li><span class="stat">30%</span> of AI-suggested code accepted into production</li>
+          <li>Projected <span class="stat">$1.5T</span> GDP boost by 2030</li>
+        </ul>
+      </div>
+
+      <div class="section-block">
+        <h2 class="section-title">The Problem</h2>
+        <div class="highlight-box large">
+          <p>LLMs' <strong>internal mechanisms</strong> for code correctness remain poorly understood.</p>
         </div>
-        <div>
-          <h3>The Black Box Problem</h3>
-          <p>Neural networks are notoriously opaque</p>
-          <div class="highlight-box">
-            <h4>Polysemanticity</h4>
-            <p style="font-size: 2.2rem;">Individual neurons respond to multiple, unrelated concepts—making interpretation nearly impossible</p>
-          </div>
-        </div>
+        <ul class="compact-list large">
+          <li><span class="stat">44%</span> of LLM bugs identical to historical training errors</li>
+          <li>Only <span class="stat">12.27%</span> accuracy in bug-prone contexts</li>
+          <li>Critical for <strong>high-stakes systems</strong> demanding transparency</li>
+        </ul>
       </div>
     </div>
     <span class="slide-number">2</span>
   </div>
 
-  <!-- Slide 3: Our Approach -->
+  <!-- Slide 3: The Challenge - Polysemanticity -->
   <div class="slide">
-    <h2>Our Approach: Sparse Autoencoders</h2>
+    <div class="slide-header">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">The Challenge: Polysemanticity</h2>
     <div class="slide-content">
-      <p>We use SAEs to decompose neural activations into interpretable features</p>
-      <figure>
-        <img src="figures/methodology-pipeline.png" alt="Methodology Pipeline" style="max-height: 600px; margin: 30px auto; display: block;">
-        <figcaption>SAE-based feature extraction pipeline for code correctness analysis</figcaption>
-      </figure>
+      <p class="small-text">Understanding LLMs requires analyzing individual neurons—but neurons are <strong>polysemantic</strong>, responding to multiple unrelated concepts like academic citations, English dialogue, HTTP requests, and Korean text.</p>
+      <div class="figure-container large">
+        <img src="figures/polysemantic neuron_original.png" alt="Polysemantic Neuron">
+      </div>
     </div>
     <span class="slide-number">3</span>
   </div>
 
-  <!-- Slide 4: Key Discovery -->
-  <div class="slide">
-    <h2>Key Discovery: The Asymmetry</h2>
+  <!-- Slide 4: Superposition & SAE (Combined) -->
+  <div class="slide" style="padding-left: 30px; padding-right: 30px;">
+    <div class="slide-header">
+      <div class="header-accent"></div>
+    </div>
     <div class="slide-content">
-      <p>We found code correctness directions exist—but they work asymmetrically:</p>
-      <div class="metric-grid">
-        <div class="metric-card">
-          <div class="value">F1 0.821</div>
-          <div class="label">Incorrect Predicting</div>
+      <div class="two-column" style="align-items: flex-start; gap: 40px;">
+        <!-- Left Column: Superposition -->
+        <div class="column">
+          <h3 class="column-title">The Challenge: Superposition</h3>
+          <p class="small-text">A hypothesized cause is <strong>superposition</strong>: networks encode more features than available dimensions. The observed model is a low-dimensional projection of a larger, idealized network where features would be disentangled.</p>
+          <div class="figure-container" style="margin-top: 20px;">
+            <img src="figures/superposition_cropped.png" alt="Superposition" style="width: 100%; max-height: 580px; box-shadow: none;">
+          </div>
         </div>
-        <div class="metric-card">
-          <div class="value">4.04%</div>
-          <div class="label">Correct Steering</div>
+        <!-- Right Column: SAE -->
+        <div class="column">
+          <h3 class="column-title">Our Approach: Sparse Autoencoders</h3>
+          <p class="small-text"><strong>SAEs</strong> address superposition by <em>expanding</em> activations into a higher-dimensional sparse space, decomposing entangled representations into interpretable directions.</p>
+          <div class="figure-container" style="margin-top: 120px;">
+            <img src="figures/sae.png" alt="Sparse Autoencoder" style="max-height: 340px;">
+            <p class="figure-caption">SAE: Activations → sparse latent space → reconstructed</p>
+          </div>
         </div>
-        <div class="metric-card">
-          <div class="value">Failed</div>
-          <div class="label">Incorrect Steering</div>
-        </div>
-      </div>
-      <div class="highlight-box" style="margin-top: 50px;">
-        <h4>The Insight</h4>
-        <p style="font-size: 2.4rem;">Models encode "wrongness" as detectable anomalies, but "correctness" is more fundamental and harder to manipulate</p>
       </div>
     </div>
     <span class="slide-number">4</span>
   </div>
 
-  <!-- Slide 5: Practical Applications -->
-  <div class="slide">
-    <h2>Practical Applications</h2>
+  <!-- Slide 5: Methodology Pipeline -->
+  <div class="slide" style="padding-left: 30px; padding-right: 30px;">
+    <div class="slide-header">
+      <div class="header-accent"></div>
+    </div>
     <div class="slide-content">
-      <ul>
-        <li><strong>Error Detection Systems:</strong> Use incorrect-predicting directions (F1=0.821) to flag likely buggy code before deployment</li>
-        <li><strong>Prompting Best Practices:</strong> Prioritize test examples over problem descriptions—test cases drive attention +15%</li>
-        <li><strong>Selective Steering:</strong> Two-stage approach: predict errors first, then steer only flagged samples to avoid corrupting correct code</li>
-      </ul>
-      <div class="highlight-box">
-        <h4>No Retraining Required</h4>
-        <p style="font-size: 2.2rem;">These techniques work with existing models through simple prompt restructuring and activation analysis</p>
+      <div class="two-column" style="display: flex; align-items: stretch; gap: 30px;">
+        <!-- Left Column: Description -->
+        <div class="column" style="flex: 1; display: flex; flex-direction: column;">
+          <h2 class="section-title">Methodology Pipeline</h2>
+          <div style="text-align: left; display: flex; align-items: center; justify-content: center; flex: 1; max-width: 480px; margin: 0 auto;">
+            <p class="small-text">Using 1,000 Python problems from MBPP, we capture residual stream activations at the final prompt token across all layers, then identify two predicting directions (correct/incorrect, via t-statistics) and two steering directions (correct/incorrect, via separation scores). We then perform multiple mechanistic analyses to understand how these directions function within the model.</p>
+          </div>
+        </div>
+        <!-- Right Column: Figure -->
+        <div class="column" style="flex: 0.84;">
+          <div class="figure-container" style="margin-top: -50px;">
+            <img src="figures/methodology.png" alt="PCDGE Methodology" style="width: 100%; max-height: 1000px; box-shadow: none;">
+          </div>
+        </div>
       </div>
     </div>
     <span class="slide-number">5</span>
   </div>
 
-  <!-- Slide 6: Thank You -->
+  <!-- Slide 6: Key Discovery -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Key Discovery</h2>
+    <div class="slide-content">
+      <div class="discovery-box">
+        <p><strong>Code correctness directions EXIST</strong> in LLM representations, revealing an <strong>asymmetry</strong>.</p>
+      </div>
+
+      <h3 class="subsection-title">Identified Directions</h3>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Direction</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="success-row">
+            <td>Incorrect Predicting</td>
+            <td>L19-5441</td>
+            <td><strong>F1=0.821</strong> &#10003;</td>
+          </tr>
+          <tr class="fail-row">
+            <td>Correct Predicting</td>
+            <td>L16-14439</td>
+            <td>F1=0.504 &#10007;</td>
+          </tr>
+          <tr class="success-row">
+            <td>Correct Steering</td>
+            <td>L16-11225</td>
+            <td><strong>4.04%</strong> &gt; 0% ctrl (p&lt;0.001) &#10003;</td>
+          </tr>
+          <tr class="fail-row">
+            <td>Incorrect Steering</td>
+            <td>L25-2853</td>
+            <td>64.66% &lt; 100% ctrl (p=1.0) &#10007;</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="tradeoff-note">*Note: Correct steering also corrupts 14.66% of initially correct code, suggesting selective application.</p>
+      <p class="insight-text"><em>The asymmetry works in our favor: we can detect errors AND steer toward correctness</em></p>
+    </div>
+    <span class="slide-number">6</span>
+  </div>
+
+  <!-- Slide 7: What does Incorrect-Predicting detect? -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">What does Incorrect-Predicting detect?</h2>
+    <div class="slide-content">
+      <div class="logit-lens-mini">
+        <div class="logit-lens-header">Logit Lens Analysis</div>
+        <div class="logit-lens-content">
+          <img src="figures/incorrect-predicting.png" alt="Logit Lens Analysis">
+          <p class="logit-lens-explanation">The incorrect-predicting direction activates strongly on null indicators and foreign language tokens, patterns the model has learned to associate with semantic errors.</p>
+        </div>
+      </div>
+    </div>
+    <span class="slide-number">7</span>
+  </div>
+
+  <!-- Slide 8: Correct Steering in Action -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Correct Steering in Action</h2>
+    <div class="slide-content">
+      <div class="code-example">
+        <div class="code-example-header">Correct Steering (L16-11225)</div>
+        <p class="code-example-explanation">Despite logit lens showing formatting tokens, steering produces semantic corrections. The <code>dict.fromkeys()</code> one-liner fails to count; steering transforms it into a proper frequency algorithm with explicit iteration.</p>
+        <div class="code-example-content">
+          <div class="code-block before">
+            <span class="code-block-label">Before Steering ✗</span>
+            <pre><span class="keyword">def</span> <span class="function">char_frequency</span>(string):
+  <span class="keyword">return</span> dict.fromkeys(string, 0)</pre>
+          </div>
+          <div class="code-block after">
+            <span class="code-block-label">After Steering ✓</span>
+            <pre><span class="keyword">def</span> <span class="function">char_frequency</span>(string):
+  frequency = {}
+  <span class="keyword">for</span> char <span class="keyword">in</span> string:
+    <span class="keyword">if</span> char <span class="keyword">in</span> frequency:
+      frequency[char] += 1
+    <span class="keyword">else</span>:
+      frequency[char] = 1
+  <span class="keyword">return</span> frequency</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="slide-number">8</span>
+  </div>
+
+  <!-- Slide 9: Attention Analysis -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Mechanistic Analysis: Attention</h2>
+    <div class="slide-content">
+      <p class="small-text">Our prompts contain three components:</p>
+      <div class="figure-container small">
+        <img src="figures/template.png" alt="Prompt Template" style="max-height: 180px;">
+      </div>
+      <p class="small-text">Where does the model focus attention when steering activates?</p>
+      <div class="figure-container medium">
+        <img src="figures/attention_delta_plots.png" alt="Attention Redistribution">
+      </div>
+      <div class="highlight-box">
+        <p><strong>Correct-steering</strong> redirects attention to <strong>test cases</strong> (+15%), while incorrect-steering shifts away (-13%). <em>Implication: Prompting should prioritize test examples.</em></p>
+      </div>
+    </div>
+    <span class="slide-number">9</span>
+  </div>
+
+  <!-- Slide 10: Weight Orthogonalization -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Weight Orthogonalization</h2>
+    <div class="slide-content">
+      <p class="small-text">Is the direction merely correlated, or <strong>necessary</strong>? We surgically remove each from model weights.</p>
+      <div class="ortho-grid">
+        <div class="ortho-item success">
+          <span class="ortho-direction">Correct Steering Removal</span>
+          <span class="ortho-label">CORRUPTION RATE</span>
+          <span class="ortho-value"><strong>83.6%</strong></span>
+          <span class="ortho-note">vs 19% control (4.4×) &#10003;</span>
+        </div>
+        <div class="ortho-item fail">
+          <span class="ortho-direction">Incorrect Steering Removal</span>
+          <span class="ortho-label">CORRECTION RATE</span>
+          <span class="ortho-value"><strong>2.2%</strong></span>
+          <span class="ortho-note">&lt; 5.5% control &#10007;</span>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <p><em>Correct-steering is <strong>necessary</strong> for generation; incorrect-steering removal doesn't fix errors (asymmetry confirmed).</em></p>
+      </div>
+    </div>
+    <span class="slide-number">10</span>
+  </div>
+
+  <!-- Slide 11: Persistence Across Fine-tuning -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Persistence Across Fine-tuning</h2>
+    <div class="slide-content">
+      <p class="small-text">Do these directions persist from base to instruction-tuned models?</p>
+      <div class="persistence-grid">
+        <div class="persistence-item">
+          <span class="persistence-label">Incorrect-predicting</span>
+          <span class="persistence-value">F1: 0.821 → 0.772</span>
+        </div>
+        <div class="persistence-item">
+          <span class="persistence-label">Correct-steering</span>
+          <span class="persistence-value">4.04% → 2.93% (p&lt;0.001)</span>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top: 40px;">
+        <p><em>Both directions persist through fine-tuning, confirming these are <strong>fundamental mechanisms</strong>.</em></p>
+      </div>
+    </div>
+    <span class="slide-number">11</span>
+  </div>
+
+  <!-- Slide 12: Research Contribution -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Research Contribution</h2>
+    <div class="slide-content">
+      <ul class="contribution-list">
+        <li><strong>First application</strong> of Sparse Autoencoders to mechanistically interpret code correctness in LLMs</li>
+        <li><strong>Adapted</strong> mechanistic interpretability techniques from entity recognition<sup>6</sup> to the code generation domain</li>
+      </ul>
+      <div class="discovery-box" style="margin-top: 40px;">
+        <p><strong>Key Finding:</strong> Code correctness directions exist and exhibit functional asymmetry—we can detect errors AND steer toward correctness.</p>
+      </div>
+    </div>
+    <span class="slide-number">12</span>
+  </div>
+
+  <!-- Slide 13: Application 1 - Error Detection -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Application 1: Error Detection</h2>
+    <div class="slide-content">
+      <div class="application-item">
+        <h4 class="application-title">Error Detection Systems</h4>
+        <ul class="application-details">
+          <li>Integrate incorrect-predicting directions into development workflows</li>
+          <li>Flag AI-generated code before production deployment</li>
+          <li>Implementation: IDE plugins, CI/CD pipeline checks, API services</li>
+        </ul>
+      </div>
+      <div class="highlight-box" style="margin-top: 40px;">
+        <p><strong>F1 = 0.821</strong> — High precision error detection without running tests</p>
+      </div>
+    </div>
+    <span class="slide-number">13</span>
+  </div>
+
+  <!-- Slide 14: Application 2 - Prompting Best Practices -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Application 2: Prompting Best Practices</h2>
+    <div class="slide-content">
+      <div class="application-item">
+        <h4 class="application-title">Attention-Informed Prompting</h4>
+        <ul class="application-details">
+          <li>Prioritize test examples over problem descriptions when prompting</li>
+          <li>Invest effort in crafting detailed test cases rather than lengthy descriptions</li>
+          <li>No model retraining required—simple prompt restructuring</li>
+        </ul>
+      </div>
+      <div class="highlight-box" style="margin-top: 40px;">
+        <p><strong>+15% attention shift</strong> to test cases during correct steering</p>
+      </div>
+    </div>
+    <span class="slide-number">14</span>
+  </div>
+
+  <!-- Slide 15: Application 3 - Selective Steering -->
+  <div class="slide">
+    <div class="slide-header teal">
+      <div class="header-accent"></div>
+    </div>
+    <h2 class="section-title">Application 3: Selective Steering</h2>
+    <div class="slide-content">
+      <div class="application-item">
+        <h4 class="application-title">Two-Stage Pipeline</h4>
+        <ul class="application-details">
+          <li>Two-stage approach combining prediction and steering</li>
+          <li><strong>Stage 1 - Predict:</strong> Use incorrect-predicting direction (L19-5441) to identify likely errors</li>
+          <li><strong>Stage 2 - Steer:</strong> Apply correct-steering direction (L16-11225) only on flagged samples</li>
+          <li>Avoids corrupting initially correct code through universal steering</li>
+        </ul>
+      </div>
+      <div class="highlight-box" style="margin-top: 40px;">
+        <p><strong>14.66% corruption rate</strong> avoided by selective application</p>
+      </div>
+    </div>
+    <span class="slide-number">15</span>
+  </div>
+
+  <!-- Slide 16: Thank You / Contact -->
   <div class="slide end-slide">
-    <h2>Thank You</h2>
-    <p class="contact">
-      Kriz Tahimic<br>
-      kriz_tahimic@dlsu.edu.ph<br><br>
-      Paper under review at ICLR 2026
-    </p>
+    <h2 class="section-title" style="border-bottom: none;">Thank You</h2>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="contact-role">Proponent</span>
+        <span class="contact-name">Kriz Tahimic</span>
+        <span class="contact-email">kriz_tahimic@dlsu.edu.ph</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-role">Adviser</span>
+        <span class="contact-name">Dr. Charibeth K. Cheng</span>
+        <span class="contact-email">charibeth.cheng@dlsu.edu.ph</span>
+      </div>
+    </div>
+    <p class="contact" style="margin-top: 30px;">Paper under review at ICLR 2026</p>
+    <ol class="references-list" style="columns: 2; column-gap: 60px;">
+      <li>Dohmke et al. (2023). Sea Change in Software Development.</li>
+      <li>Guo et al. (2025). LLMs are Bug Replicators.</li>
+      <li>Bricken et al. (2023). Towards Monosemanticity.</li>
+      <li>Templeton et al. (2024). Scaling Monosemanticity.</li>
+      <li>Lieberum et al. (2024). Gemma Scope.</li>
+      <li>Ferrando et al. (2024). Knowledge Awareness and Hallucinations.</li>
+    </ol>
   </div>
 
 </body>

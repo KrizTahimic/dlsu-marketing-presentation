@@ -1,6 +1,6 @@
 /* ============================================
    SLIDES CSS - 16:9 Presentation Theme
-   Design adapted from brochure
+   Complete copy of brochure.css, scaled for slides
    ============================================ */
 
 /* CSS Variables - Same as brochure */
@@ -20,7 +20,7 @@
   /* 16:9 Slide Dimensions */
   --slide-width: 1920px;
   --slide-height: 1080px;
-  --slide-padding: 80px;
+  --slide-padding: 60px;
 }
 
 /* Reset & Base */
@@ -37,7 +37,7 @@ html {
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 2.4rem;
-  line-height: 1.5;
+  line-height: 1.4;
   color: var(--dark);
   background: #374151;
 }
@@ -65,7 +65,7 @@ body {
     radial-gradient(ellipse at 50% 50%, rgba(37, 99, 235, 0.02) 0%, transparent 70%);
 }
 
-/* Alternate slides */
+/* Alternate slides get slightly different gradient positions */
 .slide:nth-child(even) {
   background-color: var(--lighter);
   background-image:
@@ -73,8 +73,8 @@ body {
     radial-gradient(ellipse at 20% 70%, rgba(37, 99, 235, 0.04) 0%, transparent 50%);
 }
 
-/* Bottom accent bar */
-.slide::after {
+/* Bottom accent bar for content slides */
+.slide:not(.cover)::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -84,102 +84,1140 @@ body {
   background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
 }
 
-/* Title Slide */
-.slide.title-slide {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  color: var(--white);
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.slide.title-slide::after {
-  display: none;
-}
-
-.slide.title-slide h1 {
-  font-size: 6rem;
-  font-weight: 700;
-  margin-bottom: 30px;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.slide.title-slide .subtitle {
-  font-size: 3rem;
-  opacity: 0.9;
-  max-width: 80%;
-}
-
-.slide.title-slide .author {
-  margin-top: 60px;
-  font-size: 2.4rem;
-  opacity: 0.8;
-}
-
-.slide.title-slide .institution {
-  font-size: 2rem;
-  opacity: 0.7;
-  margin-top: 10px;
-}
-
-/* Content Slides */
-.slide h2 {
-  font-size: 4.8rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 3px solid var(--accent);
-}
-
-.slide h3 {
-  font-size: 3.2rem;
-  font-weight: 600;
-  color: var(--primary-dark);
-  margin-bottom: 20px;
-}
-
-.slide p {
-  font-size: 2.8rem;
-  line-height: 1.6;
-  color: var(--medium);
-  margin-bottom: 20px;
-}
-
-.slide ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.slide li {
-  font-size: 2.8rem;
-  line-height: 1.6;
-  color: var(--dark);
-  margin-bottom: 25px;
-  padding-left: 50px;
-  position: relative;
-}
-
-.slide li::before {
-  content: '';
+/* Top header bar */
+.slide-header {
   position: absolute;
+  top: 0;
   left: 0;
-  top: 12px;
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  border-radius: 50%;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
 }
 
-/* Slide Content Layout */
+.slide-header.teal {
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+}
+
+.slide-header .header-accent {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60px;
+  height: 30px;
+  background: var(--accent);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.slide-header.teal .header-accent {
+  background: var(--primary);
+}
+
+/* Slide Content */
 .slide-content {
+  padding-top: 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  gap: 0;
 }
 
-/* Two Column Layout */
+/* ============================================
+   TYPOGRAPHY - Scaled for slides
+   ============================================ */
+
+.section-title {
+  font-size: 4.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  border-bottom: 4px solid var(--accent);
+  display: inline-block;
+  position: relative;
+}
+
+/* Diamond accent before section title */
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+.subsection-title {
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin: 30px 0 20px 0;
+}
+
+.result-title {
+  font-size: 2.8rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin: 30px 0 15px 0;
+}
+
+p {
+  font-size: 2.6rem;
+  margin-bottom: 20px;
+  color: var(--medium);
+  line-height: 1.5;
+}
+
+.small-text {
+  font-size: 2.6rem;
+}
+
+strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+sup {
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+/* ============================================
+   LISTS - Scaled for slides
+   ============================================ */
+
+.feature-list {
+  list-style: none;
+  margin: 15px 0;
+}
+
+.feature-list li {
+  font-size: 2.8rem;
+  padding: 12px 0 12px 50px;
+  position: relative;
+  color: var(--medium);
+  line-height: 1.5;
+}
+
+.feature-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.stat {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 3.2rem;
+}
+
+/* Two-Column Layout for Combined Slides */
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 25px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--accent);
+}
+
+/* Large variant for combined slides */
+.feature-list.large li {
+  font-size: 2.8rem;
+  padding: 15px 0 15px 50px;
+  line-height: 1.6;
+}
+
+.feature-list.large li::before {
+  width: 20px;
+  height: 20px;
+  top: 22px;
+}
+
+.feature-list.large .stat {
+  font-size: 3.4rem;
+}
+
+.highlight-box.large {
+  padding: 35px 45px;
+  margin-top: 30px;
+}
+
+.highlight-box.large p {
+  font-size: 2.8rem;
+  line-height: 1.5;
+}
+
+.combined-slide {
+  padding-top: 30px;
+}
+
+/* Stacked Sections Layout (brochure style) */
+.stacked-sections {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.stacked-sections .section-title {
+  margin-bottom: 15px;
+}
+
+.section-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro-text {
+  font-size: 2.6rem;
+  color: var(--medium);
+  margin-bottom: 10px;
+}
+
+.compact-list {
+  list-style: none;
+  margin: 15px 0;
+}
+
+.compact-list li {
+  font-size: 2.6rem;
+  padding: 12px 0 12px 50px;
+  position: relative;
+  color: var(--medium);
+  line-height: 1.5;
+}
+
+.compact-list li::before {
+  content: '•';
+  position: absolute;
+  left: 15px;
+  color: var(--accent);
+  font-size: 2.8rem;
+}
+
+/* Large variant for compact-list */
+.compact-list.large li {
+  font-size: 2.6rem;
+  padding: 12px 0 12px 50px;
+}
+
+.compact-list.large li::before {
+  font-size: 2.8rem;
+  left: 15px;
+}
+
+.compact-list.large .stat {
+  font-size: 3rem;
+}
+
+.numbered-list {
+  margin: 20px 0 20px 60px;
+}
+
+.numbered-list li {
+  font-size: 2.2rem;
+  padding: 8px 0;
+  color: var(--medium);
+}
+
+.mini-list {
+  list-style: none;
+  margin: 15px 0;
+}
+
+.mini-list li {
+  font-size: 2rem;
+  padding: 6px 0 6px 30px;
+  position: relative;
+  color: var(--medium);
+}
+
+.mini-list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 2.4rem;
+}
+
+/* ============================================
+   BOXES - Scaled for slides
+   ============================================ */
+
+.highlight-box {
+  background: linear-gradient(135deg, var(--light) 0%, var(--lighter) 100%);
+  border-left: 6px solid var(--primary);
+  padding: 30px 40px;
+  margin: 25px 0;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+  position: relative;
+}
+
+/* Subtle corner accent */
+.highlight-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, transparent 50%, rgba(37, 99, 235, 0.1) 50%);
+}
+
+.highlight-box p {
+  font-size: 2.8rem;
+  margin: 0;
+  color: var(--dark);
+}
+
+.highlight-box .math-formula {
+  font-family: 'Courier New', monospace;
+  font-size: 2.2rem;
+  text-align: center;
+  color: var(--primary-dark);
+  margin: 0;
+}
+
+.insight-box {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(8, 145, 178, 0.05) 100%);
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  border-radius: 16px;
+  padding: 35px;
+  margin: 30px 0;
+  box-shadow: 0 4px 24px rgba(37, 99, 235, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative corner element */
+.insight-box::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(8, 145, 178, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.insight-box h3 {
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.insight-box p {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.discovery-box {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: var(--white);
+  padding: 40px 50px;
+  border-radius: 16px;
+  margin: 25px 0;
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
+}
+
+.discovery-box p {
+  color: var(--white);
+  font-size: 2.6rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.discovery-box strong {
+  color: var(--white);
+}
+
+.first-box {
+  background: var(--light);
+  border-left: 6px solid var(--accent);
+  padding: 30px 40px;
+  border-radius: 0 16px 16px 0;
+  margin: 25px 0;
+}
+
+.first-box p {
+  font-size: 2.2rem;
+  margin: 0;
+  color: var(--dark);
+}
+
+/* Asymmetry Box */
+.asymmetry-box {
+  background: var(--light);
+  border-radius: 12px;
+  padding: 30px;
+  margin: 25px 0;
+}
+
+.asymmetry-box .found,
+.asymmetry-box .not-found {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0;
+  font-size: 2.2rem;
+}
+
+.asymmetry-box .label {
+  font-weight: 600;
+  min-width: 180px;
+}
+
+.asymmetry-box .found .label {
+  color: var(--accent-dark);
+}
+
+.asymmetry-box .found span:not(.label) {
+  color: var(--accent-dark);
+}
+
+.asymmetry-box .not-found .label {
+  color: #ef4444;
+}
+
+.asymmetry-box .not-found span:not(.label) {
+  color: #ef4444;
+}
+
+.insight-text {
+  font-size: 2.4rem;
+  font-style: italic;
+  color: var(--primary);
+  text-align: center;
+  margin-top: 25px;
+}
+
+/* Trade-off Note */
+.tradeoff-note {
+  font-size: 2.2rem;
+  font-style: italic;
+  color: var(--medium);
+  text-align: left;
+  margin: -5px 0 25px 0;
+  padding-left: 5px;
+}
+
+/* ============================================
+   FEATURE TABLE - Scaled for slides
+   ============================================ */
+
+.feature-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 2rem;
+  margin: 25px 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.feature-table thead {
+  background: var(--primary);
+  color: white;
+}
+
+.feature-table th {
+  padding: 18px 24px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 2.2rem;
+  white-space: nowrap;
+}
+
+.feature-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--light);
+  font-size: 2.4rem;
+}
+
+.feature-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.feature-table .success-row {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.feature-table .success-row td:last-child {
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+.feature-table .fail-row {
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.feature-table .fail-row td:last-child {
+  color: var(--medium);
+}
+
+/* ============================================
+   GRIDS - Scaled for slides
+   ============================================ */
+
+/* Validation Grid */
+.validation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.validation-item {
+  background: var(--light);
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.validation-label {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.validation-value {
+  font-size: 2.2rem;
+  color: var(--dark);
+}
+
+.validation-note {
+  font-size: 1.6rem;
+  color: var(--medium);
+}
+
+/* Orthogonalization Grid */
+.ortho-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 25px 0;
+}
+
+.ortho-item {
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ortho-item.success {
+  background: rgba(16, 185, 129, 0.08);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.ortho-item.fail {
+  background: rgba(239, 68, 68, 0.05);
+  border: 2px solid rgba(239, 68, 68, 0.2);
+}
+
+.ortho-direction {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.ortho-label {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ortho-value {
+  font-size: 3rem;
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.ortho-item.success .ortho-note {
+  font-size: 1.6rem;
+  color: var(--accent-dark);
+}
+
+.ortho-item.fail .ortho-note {
+  font-size: 1.6rem;
+  color: #ef4444;
+}
+
+/* Persistence Grid */
+.persistence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 25px 0;
+}
+
+.persistence-item {
+  background: rgba(16, 185, 129, 0.08);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.persistence-label {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+}
+
+.persistence-value {
+  font-size: 2.2rem;
+  color: var(--accent-dark);
+}
+
+/* ============================================
+   CODE EXAMPLE - Scaled for slides
+   ============================================ */
+
+.code-example {
+  margin: 30px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(37, 99, 235, 0.2);
+}
+
+.code-example-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 18px 30px;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.code-example-explanation {
+  font-size: 2rem;
+  color: var(--dark);
+  padding: 20px 30px;
+  margin: 0;
+  line-height: 1.5;
+  background: rgba(37, 99, 235, 0.05);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+.code-example-explanation code {
+  background: rgba(37, 99, 235, 0.1);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 1.8rem;
+}
+
+.code-example-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.code-block {
+  padding: 25px 30px;
+  font-family: 'Courier New', monospace;
+  font-size: 1.9rem;
+  line-height: 1.5;
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+.code-block.before {
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-block-label {
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.code-block.before .code-block-label {
+  color: #ef4444;
+}
+
+.code-block.after .code-block-label {
+  color: #10b981;
+}
+
+.code-block pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.code-block .comment {
+  color: #64748b;
+}
+
+.code-block .keyword {
+  color: #c084fc;
+}
+
+.code-block .function {
+  color: #60a5fa;
+}
+
+.code-block .string {
+  color: #34d399;
+}
+
+/* ============================================
+   LOGIT LENS MINI - Scaled for slides
+   ============================================ */
+
+.logit-lens-mini {
+  margin: 30px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(8, 145, 178, 0.3);
+  background: rgba(8, 145, 178, 0.03);
+}
+
+.logit-lens-header {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  color: white;
+  padding: 18px 30px;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.logit-lens-content {
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logit-lens-content img {
+  max-width: 50%;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.logit-lens-caption {
+  font-size: 2rem;
+  color: var(--medium);
+  margin: 0;
+  flex: 1;
+}
+
+.logit-lens-explanation {
+  font-size: 2rem;
+  color: var(--dark);
+  margin: 10px 0 0 0;
+  line-height: 1.5;
+}
+
+.logit-lens-caption code {
+  background: rgba(8, 145, 178, 0.1);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 1.8rem;
+  color: var(--accent-dark);
+}
+
+/* ============================================
+   FIGURES - Scaled for slides
+   ============================================ */
+
+.figure-container {
+  margin: 25px 0;
+  text-align: center;
+}
+
+.figure-container img {
+  max-width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.figure-container.small img {
+  max-height: 350px;
+}
+
+.figure-container.medium img {
+  max-height: 550px;
+  max-width: 100%;
+}
+
+.figure-container.large img {
+  max-height: 650px;
+  max-width: 100%;
+}
+
+.figure-container.xlarge img {
+  height: 700px;
+  max-height: none;
+  width: auto;
+  max-width: 100%;
+}
+
+.figure-container.full-width img {
+  max-height: none;
+  width: 100%;
+}
+
+.figure-caption {
+  font-size: 2.2rem;
+  color: var(--medium);
+  font-style: italic;
+  margin-top: 15px;
+}
+
+/* ============================================
+   RESEARCH & APPLICATIONS - Scaled for slides
+   ============================================ */
+
+/* Research Contribution List */
+.contribution-list {
+  margin: 25px 0 35px 0;
+  padding-left: 50px;
+}
+
+.contribution-list li {
+  font-size: 2.6rem;
+  padding: 12px 0;
+  color: var(--medium);
+  line-height: 1.5;
+}
+
+/* Applications List */
+.applications-list {
+  margin: 25px 0 25px 50px;
+}
+
+.applications-list li {
+  font-size: 2.6rem;
+  padding: 12px 0;
+  color: var(--medium);
+}
+
+/* Expanded Application Items */
+.application-item {
+  margin-bottom: 35px;
+}
+
+.application-title {
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin: 0 0 15px 0;
+}
+
+.application-details {
+  margin: 0 0 0 50px;
+  padding: 0;
+}
+
+.application-details li {
+  font-size: 2.6rem;
+  color: var(--medium);
+  padding: 10px 0;
+  line-height: 1.5;
+}
+
+/* References */
+.references-list {
+  list-style: decimal;
+  margin: 25px 0 25px 50px;
+}
+
+.references-list li {
+  font-size: 1.8rem;
+  padding: 8px 0;
+  color: var(--medium);
+}
+
+/* ============================================
+   CONTACT SECTION - Scaled for slides
+   ============================================ */
+
+.contact-section {
+  margin-top: auto;
+  padding-top: 30px;
+  border-top: 2px solid var(--light);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 25px 0;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-role {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.contact-name {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.contact-email {
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+
+.institution {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--medium);
+  margin-top: 25px;
+}
+
+.institution .program {
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
+/* ============================================
+   COVER SLIDE
+   ============================================ */
+
+.slide.cover {
+  padding: 0;
+  background: linear-gradient(160deg, var(--dark) 0%, #111827 100%);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide.cover::after {
+  display: none;
+}
+
+.cover-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(8, 145, 178, 0.2) 0%, transparent 50%);
+}
+
+.geometric-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image:
+    linear-gradient(30deg, var(--white) 12%, transparent 12.5%, transparent 87%, var(--white) 87.5%, var(--white)),
+    linear-gradient(150deg, var(--white) 12%, transparent 12.5%, transparent 87%, var(--white) 87.5%, var(--white)),
+    linear-gradient(30deg, var(--white) 12%, transparent 12.5%, transparent 87%, var(--white) 87.5%, var(--white)),
+    linear-gradient(150deg, var(--white) 12%, transparent 12.5%, transparent 87%, var(--white) 87.5%, var(--white));
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px;
+}
+
+.cover-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 50px 100px;
+  text-align: center;
+}
+
+.cover-top {
+  flex: 0 0 auto;
+}
+
+.cover-title {
+  margin-bottom: 15px;
+}
+
+.title-line {
+  display: block;
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--white) 0%, rgba(255,255,255,0.9) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title-line-small {
+  display: block;
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: rgba(255,255,255,0.9);
+  margin-top: 10px;
+}
+
+.cover-subtitle {
+  font-size: 3rem;
+  font-weight: 500;
+  color: var(--accent-light);
+  margin-top: 10px;
+}
+
+/* Neural Network SVG */
+.cover-visual {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 0;
+}
+
+.neural-network {
+  width: 500px;
+  height: auto;
+}
+
+.neural-network .node {
+  stroke: var(--white);
+  stroke-width: 2;
+}
+
+.neural-network .node.input {
+  fill: var(--primary);
+}
+
+.neural-network .node.hidden {
+  fill: var(--accent);
+}
+
+.neural-network .node.output {
+  fill: var(--primary-light);
+}
+
+.neural-network .connections line {
+  stroke: rgba(255,255,255,0.15);
+  stroke-width: 2;
+}
+
+.neural-network .direction-path {
+  stroke: var(--accent-light);
+  stroke-width: 6;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 12px var(--accent));
+}
+
+.neural-network .direction-label {
+  font-size: 20px;
+  fill: var(--accent-light);
+  text-anchor: middle;
+  font-style: italic;
+}
+
+.cover-bottom {
+  flex: 0 0 auto;
+}
+
+.author-name {
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.adviser-name {
+  font-size: 2.4rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 35px;
+}
+
+.institution-badge {
+  display: inline-flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  padding: 25px 50px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+  margin-bottom: 25px;
+}
+
+.institution-badge .college {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.institution-badge .university {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--accent-light);
+}
+
+.academic-year {
+  font-size: 2rem;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ============================================
+   TWO-COLUMN LAYOUT FOR SLIDES
+   ============================================ */
+
 .two-column {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -187,87 +1225,28 @@ body {
   flex: 1;
 }
 
-/* Image Styling */
-.slide img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+.two-column.wide-left {
+  grid-template-columns: 1.3fr 0.7fr;
 }
 
-.slide figure {
-  margin: 20px 0;
-}
-
-.slide figcaption {
-  font-size: 2rem;
-  color: var(--medium);
-  text-align: center;
-  margin-top: 15px;
-  font-style: italic;
-}
-
-/* Highlight Box */
-.highlight-box {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(8, 145, 178, 0.06) 100%);
-  border-left: 5px solid var(--accent);
-  padding: 30px 40px;
-  border-radius: 0 12px 12px 0;
-  margin: 30px 0;
-}
-
-.highlight-box h4 {
-  font-size: 2.4rem;
-  color: var(--accent-dark);
-  margin-bottom: 15px;
-}
-
-/* Metric Cards */
-.metric-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-top: 40px;
-}
-
-.metric-card {
-  background: var(--white);
-  padding: 40px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  border: 2px solid transparent;
-  background-image: linear-gradient(white, white), linear-gradient(135deg, var(--primary), var(--accent));
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-}
-
-.metric-card .value {
-  font-size: 5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.metric-card .label {
-  font-size: 2rem;
-  color: var(--medium);
-  margin-top: 10px;
+.two-column.wide-right {
+  grid-template-columns: 0.7fr 1.3fr;
 }
 
 /* Slide Number */
 .slide-number {
   position: absolute;
-  bottom: 25px;
+  bottom: 20px;
   right: 40px;
   font-size: 1.8rem;
   color: var(--medium);
   opacity: 0.6;
 }
 
-/* End Slide */
+/* ============================================
+   END/THANK YOU SLIDE
+   ============================================ */
+
 .slide.end-slide {
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   color: var(--white);
@@ -283,7 +1262,12 @@ body {
 .slide.end-slide h2 {
   color: var(--white);
   border-bottom: none;
-  font-size: 5rem;
+  font-size: 6rem;
+  padding-left: 0;
+}
+
+.slide.end-slide h2::before {
+  display: none;
 }
 
 .slide.end-slide .contact {
@@ -292,7 +1276,43 @@ body {
   opacity: 0.9;
 }
 
-/* Print Styles */
+.slide.end-slide .contact-grid {
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.slide.end-slide .contact-item {
+  text-align: center;
+}
+
+.slide.end-slide .contact-role {
+  color: rgba(255,255,255,0.7);
+}
+
+.slide.end-slide .contact-name {
+  color: var(--white);
+}
+
+.slide.end-slide .contact-email {
+  color: rgba(255,255,255,0.8);
+}
+
+.slide.end-slide .references-list {
+  text-align: left;
+  max-width: 1200px;
+  margin: 30px auto;
+  color: rgba(255,255,255,0.8);
+}
+
+.slide.end-slide .references-list li {
+  color: rgba(255,255,255,0.7);
+  font-size: 1.6rem;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
 @media print {
   body {
     background: none;
@@ -301,5 +1321,18 @@ body {
     margin: 0;
     box-shadow: none;
     page-break-after: always;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
+  .cover-background,
+  .gradient-overlay,
+  .geometric-pattern {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@page {
+  size: 1920px 1080px;
+  margin: 0;
 }
