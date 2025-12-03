@@ -370,7 +370,7 @@ sup {
 .highlight-box {
   background: linear-gradient(135deg, var(--light) 0%, var(--lighter) 100%);
   border-left: 6px solid var(--primary);
-  padding: 30px 40px;
+  padding: 50px 60px;
   margin: 25px 0;
   border-radius: 0 16px 16px 0;
   box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
@@ -389,7 +389,7 @@ sup {
 }
 
 .highlight-box p {
-  font-size: 2.8rem;
+  font-size: 3.4rem;
   margin: 0;
   color: var(--dark);
 }
@@ -440,7 +440,7 @@ sup {
 .discovery-box {
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   color: var(--white);
-  padding: 40px 50px;
+  padding: 60px 70px;
   border-radius: 16px;
   margin: 25px 0;
   box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
@@ -448,7 +448,7 @@ sup {
 
 .discovery-box p {
   color: var(--white);
-  font-size: 2.6rem;
+  font-size: 3.4rem;
   margin: 0;
   line-height: 1.5;
 }
@@ -650,14 +650,14 @@ sup {
 }
 
 .ortho-direction {
-  font-size: 1.8rem;
+  font-size: 2.6rem;
   font-weight: 600;
   color: var(--dark);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .ortho-label {
-  font-size: 1.4rem;
+  font-size: 2rem;
   font-weight: 600;
   color: var(--primary);
   text-transform: uppercase;
@@ -665,18 +665,18 @@ sup {
 }
 
 .ortho-value {
-  font-size: 3rem;
+  font-size: 4.5rem;
   color: var(--dark);
   font-weight: 700;
 }
 
 .ortho-item.success .ortho-note {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   color: var(--accent-dark);
 }
 
 .ortho-item.fail .ortho-note {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   color: #ef4444;
 }
 
@@ -700,13 +700,13 @@ sup {
 }
 
 .persistence-label {
-  font-size: 1.8rem;
+  font-size: 2.6rem;
   font-weight: 600;
   color: var(--accent-dark);
 }
 
 .persistence-value {
-  font-size: 2.2rem;
+  font-size: 3.2rem;
   color: var(--accent-dark);
 }
 
@@ -715,22 +715,23 @@ sup {
    ============================================ */
 
 .code-example {
-  margin: 30px 0;
+  margin: auto;
   border-radius: 16px;
   overflow: hidden;
   border: 2px solid rgba(37, 99, 235, 0.2);
+  max-width: 70%;
 }
 
 .code-example-header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
   padding: 18px 30px;
-  font-size: 2.2rem;
+  font-size: 2.8rem;
   font-weight: 600;
 }
 
 .code-example-explanation {
-  font-size: 2rem;
+  font-size: 2.6rem;
   color: var(--dark);
   padding: 20px 30px;
   margin: 0;
@@ -743,7 +744,7 @@ sup {
   background: rgba(37, 99, 235, 0.1);
   padding: 3px 10px;
   border-radius: 6px;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
 }
 
 .code-example-content {
@@ -755,7 +756,7 @@ sup {
 .code-block {
   padding: 25px 30px;
   font-family: 'Courier New', monospace;
-  font-size: 1.9rem;
+  font-size: 2.4rem;
   line-height: 1.5;
   background: #1e293b;
   color: #e2e8f0;
@@ -766,7 +767,7 @@ sup {
 }
 
 .code-block-label {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -810,18 +811,19 @@ sup {
    ============================================ */
 
 .logit-lens-mini {
-  margin: 30px 0;
+  margin: auto;
   border-radius: 12px;
   overflow: hidden;
   border: 2px solid rgba(8, 145, 178, 0.3);
   background: rgba(8, 145, 178, 0.03);
+  max-width: 60%;
 }
 
 .logit-lens-header {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   color: white;
   padding: 18px 30px;
-  font-size: 2.2rem;
+  font-size: 2.8rem;
   font-weight: 600;
 }
 
@@ -846,7 +848,7 @@ sup {
 }
 
 .logit-lens-explanation {
-  font-size: 2rem;
+  font-size: 2.6rem;
   color: var(--dark);
   margin: 10px 0 0 0;
   line-height: 1.5;
@@ -922,8 +924,8 @@ sup {
 }
 
 .contribution-list li {
-  font-size: 2.6rem;
-  padding: 12px 0;
+  font-size: 3.4rem;
+  padding: 20px 0;
   color: var(--medium);
   line-height: 1.5;
 }
@@ -945,10 +947,10 @@ sup {
 }
 
 .application-title {
-  font-size: 2.6rem;
+  font-size: 3.2rem;
   font-weight: 600;
   color: var(--accent-dark);
-  margin: 0 0 15px 0;
+  margin: 0 0 20px 0;
 }
 
 .application-details {
@@ -957,9 +959,9 @@ sup {
 }
 
 .application-details li {
-  font-size: 2.6rem;
+  font-size: 3.2rem;
   color: var(--medium);
-  padding: 10px 0;
+  padding: 16px 0;
   line-height: 1.5;
 }
 
